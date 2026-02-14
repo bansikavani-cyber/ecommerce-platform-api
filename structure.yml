@@ -1,0 +1,199 @@
+﻿# Enterprise.sln
+# │
+# ├── Environments
+# │   ├── Dev / UAT / Prod
+# │   │   ├── AKS Cluster (Kubernetes)
+# │   │   ├── Azure SQL Databases
+# │   │   │
+# │   │   │   ├── IdentityDB
+# │   │   │   │   ├── Identity.Api ------------------> Controllers: AuthController.cs, UserController.cs, RefreshTokenController.cs
+# │   │   │   │   │                                     Middleware: CorrelationIdMiddleware.cs, ExceptionMiddleware.cs, PerformanceMiddleware.cs
+# │   │   │   │   │                                     Logging: SerilogLogger.cs
+# │   │   │   │   │                                     Metrics: PerfStatsMiddleware.cs
+# │   │   │   │   │                                     SignalR: IdentityHub.cs
+# │   │   │   │   │                                     GraphQL: IdentitySchema.cs, IdentityQuery.cs, IdentityMutation.cs
+# │   │   │   │   │                                     Program.cs
+# │   │   │   │   ├── Identity.Application -----------> Commands: RegisterUserCommand.cs, LoginCommand.cs, ChangePasswordCommand.cs
+# │   │   │   │   │                                     Queries: GetUserByIdQuery.cs, GetRolesQuery.cs
+# │   │   │   │   │                                     Handlers: RegisterUserHandler.cs, LoginHandler.cs, ChangePasswordHandler.cs
+# │   │   │   │   │                                     Validators: RegisterUserValidator.cs, LoginValidator.cs
+# │   │   │   │   ├── Identity.Domain ----------------> Entities: User.cs, Role.cs, RefreshToken.cs
+# │   │   │   │   │                                     Aggregates: UserAggregate.cs
+# │   │   │   │   │                                     ValueObjects: Email.cs, PasswordHash.cs
+# │   │   │   │   │                                     DomainEvents: UserRegisteredEvent.cs, PasswordChangedEvent.cs
+# │   │   │   │   ├── Identity.Infrastructure -------> JWT: JwtTokenService.cs
+# │   │   │   │   │                                     Caching: RedisCacheService.cs
+# │   │   │   │   │                                     Messaging: AzureServiceBusPublisher.cs
+# │   │   │   │   │                                     Email: EmailService.cs
+# │   │   │   │   │                                     ExternalIntegrations: OAuthService.cs
+# │   │   │   │   └── Identity.Persistence -----------> DbContext: IdentityDbContext.cs
+# │   │   │   │                                               Repositories: UserRepository.cs, RoleRepository.cs
+# │   │   │   │                                               Migrations: 2026_02_14_InitialCreate.cs
+# │   │   │   │                                               Concurrency: RowVersionConfig.cs
+# │   │   │   │
+# │   │   │   ├── OrdersDB
+# │   │   │   │   ├── Orders.Api ---------------------> Controllers: OrderController.cs, PaymentController.cs
+# │   │   │   │   │                                     Middleware, Logging, Metrics
+# │   │   │   │   │                                     SignalR: OrdersHub.cs
+# │   │   │   │   │                                     GraphQL: OrdersSchema.cs, OrdersQuery.cs, OrdersMutation.cs
+# │   │   │   │   │                                     Program.cs
+# │   │   │   │   ├── Orders.Application -----------> Commands: CreateOrderCommand.cs, CancelOrderCommand.cs
+# │   │   │   │   │                                     Queries: GetOrderByIdQuery.cs
+# │   │   │   │   │                                     Handlers: CreateOrderHandler.cs, CancelOrderHandler.cs
+# │   │   │   │   │                                     Validators: CreateOrderValidator.cs
+# │   │   │   │   ├── Orders.Domain -----------------> Entities: Order.cs, OrderLine.cs
+# │   │   │   │   │                                     Aggregates: OrderAggregate.cs
+# │   │   │   │   │                                     DomainEvents: OrderCreatedEvent.cs
+# │   │   │   │   ├── Orders.Infrastructure --------> PaymentGatewayService.cs
+# │   │   │   │   │                                     Messaging: AzureServiceBusPublisher.cs
+# │   │   │   │   │                                     HangfireJobs: ProcessOrderJob.cs
+# │   │   │   │   └── Orders.Persistence -----------> DbContext: OrdersDbContext.cs
+# │   │   │   │                                               Repositories: OrderRepository.cs
+# │   │   │   │                                               Migrations: 2026_02_14_OrdersInit.cs
+# │   │   │   │                                               Concurrency: RowVersionConfig.cs
+# │   │   │   │
+# │   │   │   ├── InventoryDB
+# │   │   │   │   ├── Inventory.Api -----------------> Controllers: StockController.cs
+# │   │   │   │   │                                     Logging, Metrics, SignalR, GraphQL
+# │   │   │   │   │                                     Program.cs
+# │   │   │   │   ├── Inventory.Application -------> Commands: ReserveStockCommand.cs, ReleaseStockCommand.cs
+# │   │   │   │   │                                     Queries: GetStockLevelQuery.cs
+# │   │   │   │   │                                     Services: StockAllocationService.cs
+# │   │   │   │   ├── Inventory.Domain -------------> Entities: StockItem.cs
+# │   │   │   │   │                                     ValueObjects: SKU.cs, Quantity.cs
+# │   │   │   │   │                                     DomainEvents: StockReservedEvent.cs
+# │   │   │   │   ├── Inventory.Infrastructure ----> OrleansGrains: StockGrain.cs
+# │   │   │   │   │                                     Messaging: AzureServiceBusPublisher.cs
+# │   │   │   │   │                                     Caching: RedisCacheService.cs
+# │   │   │   │   └── Inventory.Persistence -------> DbContext: InventoryDbContext.cs
+# │   │   │   │                                               Repositories: StockRepository.cs
+# │   │   │   │                                               Migrations: 2026_02_14_InventoryInit.cs
+# │   │   │   │
+# │   │   │   ├── CartDB ----------------------------> Same internal layers
+# │   │   │   ├── PaymentDB -------------------------> Same internal layers
+# │   │   │   └── NotificationDB -------------------> Same internal layers
+# │   │
+# │   │   ├── CertificateManagement
+# │   │   │   ├── CertificateManagement.Api -------> Controllers: CertController.cs
+# │   │   │   │                                     HostedServices: ExpiryMonitorService.cs, RenewalHostedService.cs
+# │   │   │   │                                     Logging, Program.cs
+# │   │   │   ├── CertificateManagement.Application
+# │   │   │   ├── CertificateManagement.Domain
+# │   │   │   ├── CertificateManagement.Infrastructure
+# │   │   │   └── CertificateManagement.Persistence
+# │   │
+# │   │   ├── API Gateway
+# │   │   │   └── Gateway.Api ---------------------> Controllers, Middleware, Logging, Metrics, Program.cs
+# │   │
+# │   │   ├── Background Jobs
+# │   │   │   ├── HangfireJobs ---------------------> RecurringJobs.cs, DelayedJobs.cs
+# │   │   │   └── WorkerService -------------------> EventConsumers.cs, ScheduledJobs.cs, Program.cs
+# │   │
+# │   │   ├── Orleans Cluster
+# │   │   │   ├── Orleans.Grains -----------------> StockGrain.cs, OrderGrain.cs
+# │   │   │   ├── Orleans.Interfaces --------------> IStockGrain.cs, IOrderGrain.cs
+# │   │   │   └── Orleans.Silo -------------------> Program.cs
+# │   │
+# │   │   └── BuildingBlocks
+# │   │       ├── SharedKernel
+# │   │       ├── EventBus
+# │   │       ├── CQRS
+# │   │       ├── Common
+# │   │       ├── Contracts
+# │   │       └── Security
+# │
+# ├── Tests
+# │   ├── UnitTests
+# │   ├── IntegrationTests
+# │   ├── ConcurrencyTests
+# │   ├── LoadTests
+# │   └── PerformanceBenchmarks
+# │
+# ├── DevOps / Deployment
+# │   ├── Docker -------------------------------> docker-compose.yml
+# │   ├── Kubernetes ---------------------------> deployments, services, ingress
+# │   ├── Terraform / Bicep / ARM Templates
+# │   └── CI-CD Pipelines
+# │
+# └── Azure Services
+#     ├── Azure SQL Databases
+#     ├── Azure Service Bus
+#     ├── Azure Key Vault
+#     └── Certificate Renewal Services
+#                                   ┌───────────────────┐
+#                                   │   API Gateway      │
+#                                   │  (Gateway.Api)     │
+#                                   └─────────┬─────────┘
+#                                             │ routes requests
+#                                             ▼
+#           ┌───────────────────────────────────────────────────────────┐
+#           │                       Microservices                        │
+#           │───────────────────────────────────────────────────────────│
+#           │                                                                   │
+#           │  ┌───────────────┐       ┌───────────────┐       ┌───────────────┐
+#           │  │ Identity.Api  │       │ Orders.Api    │       │ Inventory.Api │
+#           │  └─────┬─────────┘       └─────┬─────────┘       └─────┬─────────┘
+#           │        │                        │                        │
+#           │        ▼                        ▼                        ▼
+#           │  ┌───────────────┐       ┌───────────────┐       ┌───────────────┐
+#           │  │ Application   │       │ Application   │       │ Application   │
+#           │  │ (Commands,    │       │ (Commands,    │       │ (Commands,    │
+#           │  │ Queries,      │       │ Queries,      │       │ Queries,      │
+#           │  │ Handlers)     │       │ Handlers)     │       │ Handlers)     │
+#           │  └─────┬─────────┘       └─────┬─────────┘       └─────┬─────────┘
+#           │        │                        │                        │
+#           │        ▼                        ▼                        ▼
+#           │  ┌───────────────┐       ┌───────────────┐       ┌───────────────┐
+#           │  │ Domain        │       │ Domain        │       │ Domain        │
+#           │  │ (Entities,    │       │ (Entities,    │       │ (Entities,    │
+#           │  │ Aggregates,   │       │ Aggregates,   │       │ Aggregates,   │
+#           │  │ ValueObjects, │       │ ValueObjects, │       │ ValueObjects, │
+#           │  │ DomainEvents) │       │ DomainEvents) │       │ DomainEvents) │
+#           │  └─────┬─────────┘       └─────┬─────────┘       └─────┬─────────┘
+#           │        │                        │                        │
+#           │        ▼                        ▼                        ▼
+#           │  ┌───────────────┐       ┌───────────────┐       ┌───────────────┐
+#           │  │ Infrastructure│       │ Infrastructure│       │ Infrastructure│
+#           │  │ (JWT, Cache,  │       │ Payment, Msg, │       │ OrleansGrains,│
+#           │  │ Messaging,    │       │ HangfireJobs) │       │ Caching)      │
+#           │  │ Email, ExtSvc)│       │               │       │               │
+#           │  └─────┬─────────┘       └─────┬─────────┘       └─────┬─────────┘
+#           │        │                        │                        │
+#           │        ▼                        ▼                        ▼
+#           │  ┌───────────────┐       ┌───────────────┐       ┌───────────────┐
+#           │  │ Persistence   │       │ Persistence   │       │ Persistence   │
+#           │  │ (DbContext,   │       │ (DbContext,   │       │ (DbContext,   │
+#           │  │ Repos, Migs)  │       │ Repos, Migs)  │       │ Repos, Migs)  │
+#           │  └─────┬─────────┘       └─────┬─────────┘       └─────┬─────────┘
+#           │        │                        │                        │
+#           │        ▼                        ▼                        ▼
+#           │  ┌───────────────────────────────────────────────────────────┐
+#           │  │ Event Bus / Messaging (Azure Service Bus, RabbitMQ etc.) │
+#           │  └─────┬───────────────────────┬───────────────────────────┘
+#           │        │                       │
+#           │        ▼                       ▼
+#           │  ┌───────────────┐       ┌───────────────┐
+#           │  │ Orleans       │       │ Background    │
+#           │  │ Grains/Silo   │       │ Jobs          │
+#           │  │ StockGrain.cs │       │ HangfireJobs  │
+#           │  │ OrderGrain.cs │       │ WorkerService │
+#           │  └───────────────┘       └───────────────┘
+#           │
+#           │
+#           ▼
+#   ┌─────────────────────┐
+#   │ Azure Services      │
+#   │ - Azure SQL DB      │
+#   │ - Azure Key Vault   │
+#   │ - Azure Service Bus │
+#   │ - AKS Cluster       │
+#   │ - Certificate Mgmt  │
+#   └─────────────────────┘
+
+# Cross-cutting Features (applied throughout):
+# - Logging: Serilog
+# - Metrics: PerfStats
+# - Real-time: SignalR
+# - Authentication: JWT
+# - API Queries: GraphQL
+# - Certificate Renewal & Hosted Services

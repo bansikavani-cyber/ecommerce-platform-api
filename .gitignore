@@ -1,0 +1,27 @@
+# ----------------------------
+# .NET / Visual Studio
+# ----------------------------
+bin/
+obj/
+.vs/
+*.user
+*.suo
+appsettings*.json
+
+# ----------------------------
+# Logs & Temporary Files
+# ----------------------------
+*.log
+*.tmp
+
+# ----------------------------
+# YAML Files
+# ----------------------------
+
+structure.yml   # explicitly ignore your main project structure YAML
+Daywiseplan.yml
+
+# ----------------------------
+# Others
+# ----------------------------
+*.DS_Store
