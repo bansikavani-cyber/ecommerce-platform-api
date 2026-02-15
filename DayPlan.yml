@@ -1,0 +1,107 @@
+﻿# Enterprise.sln
+# │
+# ├── Day 1 – Solution & Foundation
+# │   ├── Create Enterprise.sln
+# │   ├── Create src/ and tests/
+# │   ├── Create folders:
+# │   │   ├── Services/
+# │   │   ├── BuildingBlocks/
+# │   │   ├── Gateways/
+# │   │   ├── Realtime/
+# │   │   ├── BackgroundJobs/
+# │   │   ├── Actors/
+# │   │   └── GraphQL/
+# │   ├── Add .gitignore
+# │   └── Initialize git
+# │
+# ├── Day 2 – Identity.Domain
+# │   ├── Entities/
+# │   │   ├── User.cs
+# │   │   ├── Role.cs
+# │   │   └── RefreshToken.cs
+# │   ├── ValueObjects/
+# │   │   ├── Email.cs
+# │   │   └── PasswordHash.cs
+# │   └── DomainEvents/
+# │       ├── UserRegisteredEvent.cs
+# │       └── PasswordChangedEvent.cs
+# │
+# ├── Day 3 – Identity.Application
+# │   ├── Commands/
+# │   │   ├── RegisterUserCommand.cs
+# │   │   ├── LoginCommand.cs
+# │   │   └── ChangePasswordCommand.cs
+# │   ├── Queries/GetUserByIdQuery.cs
+# │   ├── Handlers/
+# │   │   ├── RegisterUserHandler.cs
+# │   │   ├── LoginHandler.cs
+# │   │   └── ChangePasswordHandler.cs
+# │   └── Validators/
+# │       ├── RegisterUserValidator.cs
+# │       └── LoginValidator.cs
+# │
+# ├── Day 4 – Identity.Persistence
+# │   ├── IdentityDbContext.cs
+# │   ├── Configurations/
+# │   │   ├── UserConfiguration.cs
+# │   │   └── RoleConfiguration.cs
+# │   ├── Repositories/
+# │   │   ├── UserRepository.cs
+# │   │   └── RefreshTokenRepository.cs
+# │   └── Migrations/
+# │
+# ├── Day 5 – Identity.Api
+# │   ├── Controllers/
+# │   │   ├── AuthController.cs
+# │   │   └── UsersController.cs
+# │   ├── Middleware/
+# │   │   ├── ExceptionMiddleware.cs
+# │   │   └── CorrelationMiddleware.cs
+# │   ├── JWT Setup
+# │   └── Program.cs configuration
+# │
+# ├── Day 6 – Orders.Domain
+# │   ├── Entities/
+# │   │   ├── Order.cs
+# │   │   └── OrderItem.cs
+# │   ├── Aggregates/OrderAggregate.cs
+# │   └── DomainEvents/
+# │       ├── OrderCreatedEvent.cs
+# │       └── OrderCancelledEvent.cs
+# │
+# ├── Day 7 – Orders.Application
+# │   ├── Commands/
+# │   │   ├── CreateOrderCommand.cs
+# │   │   └── CancelOrderCommand.cs
+# │   ├── Queries/GetOrderQuery.cs
+# │   └── Handlers/
+# │       ├── CreateOrderHandler.cs
+# │       └── CancelOrderHandler.cs
+# │
+# ├── Day 8 – Orders.Persistence + Api
+# │   ├── OrderDbContext.cs
+# │   ├── OrderRepository.cs
+# │   ├── OrderController.cs
+# │   └── DB Migration
+# │
+# ├── Day 9 – Inventory.Domain + Application
+# │   ├── StockItem.cs
+# │   ├── AddStockCommand.cs
+# │   ├── RemoveStockCommand.cs
+# │   └── Handlers
+# │
+# ├── Day 10 – Inventory.Persistence + Api
+# │   ├── InventoryDbContext.cs
+# │   ├── StockRepository.cs
+# │   └── StockController.cs
+# │
+# ├── Day 11 – Cart.Domain + Application
+# │   ├── CartItem.cs
+# │   ├── CartAggregate.cs
+# │   ├── AddItemCommand.cs
+# │   └── CheckoutCommand.cs
+# │
+# ├── Day 12 – Cart.Api + Redis
+# │   ├── RedisCache.cs
+# │   ├── CartRepository.cs
+# │   └─
